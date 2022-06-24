@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ChatMessage extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["char_room_id", "user_id", "message"];
+    protected $fillable = ["chat_room_id", "user_id", "message"];
 
     /**
      * Get the room associated with the ChatMessage
@@ -19,7 +20,7 @@ class ChatMessage extends Model
      */
     public function room(): HasOne
     {
-        return $this->hasOne(ChatRoom::class);
+        return $this->hasOne(ChatRoom::class, 'id', "chat_room_id");
     }
 
     /**
@@ -27,8 +28,8 @@ class ChatMessage extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }
