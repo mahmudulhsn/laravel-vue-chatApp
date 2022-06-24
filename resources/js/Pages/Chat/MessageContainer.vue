@@ -9,18 +9,23 @@
         'bg-gray-600': message.user_id == this.$page.props.user.id,
       }"
     >
-      {{ message.message }}
+      <MessageItem :message="message" />
     </div>
   </div>
 </template>
 
 <script>
+import MessageItem from "./MessageItem.vue";
 export default {
   props: {
     messages: {
       type: Array,
       default: [],
     },
+  },
+
+  components: {
+    MessageItem,
   },
 };
 </script>
