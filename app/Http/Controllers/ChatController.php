@@ -17,7 +17,7 @@ class ChatController extends Controller
 
     public function messages(Request $request, $roomID)
     {
-        return ChatMessage::with("user")->where("chat_room_id", $roomID)->oldest("created_at")->get();
+        return ChatMessage::with("user")->where("chat_room_id", $roomID)->oldest()->get();
     }
 
     public function createMessage(MessageRequest $request, $roomID)

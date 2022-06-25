@@ -1,19 +1,16 @@
 <template>
   <div>
     <div
-      class="bg-gray-200 my-2 rounded px-3 py-2 mx-5 overflow-hidden text-white"
+      class="bg-white-200 my-2 overflow-hidden text-white"
       v-for="(message, index) in messages"
       :key="index"
-      :class="{
-        'bg-green-600': message.user_id !== this.$page.props.user.id,
-        'bg-gray-600': message.user_id == this.$page.props.user.id,
-      }"
+      :class="{}"
     >
-      <span
-        :class="{ 'text-right': message.user_id == this.$page.props.user.id }"
-      >
-        <MessageItem :message="message" />
-      </span>
+      <div style="width: 100%" class="my-2">
+        <div>
+          <MessageItem :message="message" />
+        </div>
+      </div>
     </div>
   </div>
 </template>

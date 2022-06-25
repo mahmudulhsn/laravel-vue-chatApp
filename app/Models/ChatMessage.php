@@ -13,6 +13,10 @@ class ChatMessage extends Model
 
     protected $fillable = ["chat_room_id", "user_id", "message"];
 
+    protected $casts = [
+        'created_at' => "datetime:d, M Y h:i a",
+    ];
+
     /**
      * Get the room associated with the ChatMessage
      *
