@@ -1,5 +1,6 @@
 <template>
   <div>
+    <span class="text-bold">{{ message.user.name }}:</span>
     {{ message.message }}
   </div>
 </template>
