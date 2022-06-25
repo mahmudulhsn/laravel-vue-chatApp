@@ -9,7 +9,11 @@
         'bg-gray-600': message.user_id == this.$page.props.user.id,
       }"
     >
-      <MessageItem :message="message" />
+      <span
+        :class="{ 'text-right': message.user_id == this.$page.props.user.id }"
+      >
+        <MessageItem :message="message" />
+      </span>
     </div>
   </div>
 </template>

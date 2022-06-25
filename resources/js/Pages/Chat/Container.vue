@@ -51,7 +51,33 @@ export default {
   mounted() {
     this.getRooms();
   },
+
+  watch: {
+    currentRoom(newValue, oldValue) {
+      if (oldValue.id) {
+        this.disconnect(oldValue);
+      }
+      this.connect();
+    },
+  },
+
   methods: {
+    connect() {
+      if (this.currentRoom.id) {
+        this.getMessages();
+        window.Echo.private("chat." + this.currentRoom.id).listen(
+          "NewChatMessage",
+          (e) => {
+            this.getMessages();
+            this.scrollToEnd();
+          }
+        );
+      }
+    },
+
+    disconnect(room) {
+      window.Echo.leave("chat." + room.id);
+    },
     getRooms() {
       axios
         .get("/chat/rooms")
@@ -66,7 +92,6 @@ export default {
 
     setRoom(room) {
       this.currentRoom = room;
-      this.getMessages();
     },
 
     getMessages() {

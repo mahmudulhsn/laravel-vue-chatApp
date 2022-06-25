@@ -47,14 +47,12 @@ export default {
       }
 
       axios
-        .post("chat/room/" + this.room + "/message", {
+        .post("chat/room/" + this.room.id + "/message", {
           message: this.message,
         })
         .then((response) => {
-          if (response.status == 201) {
-            this.message = "";
-            this.$emit("messageSent", response.data);
-          }
+          this.message = "";
+          this.$emit("messageSent", response.data);
         })
         .catch((error) => {
           console.log(error);

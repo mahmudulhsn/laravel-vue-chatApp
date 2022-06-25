@@ -30,7 +30,6 @@ export default {
   },
 
   created() {
-    console.log(this.rooms);
     this.selected = this.currentRoom;
   },
 };
