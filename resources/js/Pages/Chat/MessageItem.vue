@@ -39,7 +39,8 @@
               'float-right': message.user_id == this.$page.props.user.id,
             }"
           >
-            {{ message.message }}
+            <img :src="message.small_url" alt="" />
+            <span v-if="message.message !== ''">{{ message.message }}</span>
           </div>
         </div>
       </div>
@@ -68,6 +69,9 @@ export default {
       type: Object,
       default: {},
     },
+  },
+  created() {
+    console.log(this.message);
   },
 };
 </script>

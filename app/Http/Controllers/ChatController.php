@@ -22,7 +22,12 @@ class ChatController extends Controller
 
     public function createMessage(MessageRequest $request, $roomID)
     {
-        ChatMessage::create($request->validated());
+        $newMessage = ChatMessage::create($request->validated());
+
+        if ($newMessage instanceof ChatMessage && $request->has("image") && file_exists($request->image)) {
+            $newMessage->addMedia($request->image)->toMediaCollection('chat-image');
+        }
+
         $message = ChatMessage::with("user")->latest()->first();
 
         broadcast(new NewChatMessage($message))->toOthers();

@@ -26,7 +26,7 @@ class MessageRequest extends FormRequest
         return [
             "user_id" => ["required", "numeric"],
             "chat_room_id" => ["required", "numeric"],
-            "message" => ["required", "string"],
+            "message" => ["nullable", "string"],
         ];
     }
 

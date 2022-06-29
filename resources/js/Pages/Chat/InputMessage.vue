@@ -1,6 +1,24 @@
 <template>
   <div>
     <div class="border-t border-gray-500 py-2 px-5">
+      <div v-if="preview" class="col-md-5 offset-md-1">
+        <div class="form-group">
+          <div class="border p-2 mt-3">
+            <p class="mb-2">
+              <span
+                v-if="preview"
+                @click="reset"
+                class="cursor-pointer bg-red-800 text-white rounded px-2 py-1"
+                >Clear</span
+              >
+            </p>
+            <span v-if="preview">
+              <img width="100" :src="preview" class="img-fluid" />
+            </span>
+          </div>
+        </div>
+      </div>
+
       <div class="flex justify-between">
         <div class="w-1/12">
           <div class="flex justify-center items-center w-full">
@@ -41,7 +59,12 @@
                 </svg>
                 <p class="text-sm text-gray-500 dark:text-gray-400">Image</p>
               </div>
-              <input id="dropzone-file" type="file" class="hidden" />
+              <input
+                id="dropzone-file"
+                type="file"
+                class="hidden"
+                @change="previewImage"
+              />
             </label>
           </div>
         </div>
@@ -80,26 +103,50 @@ export default {
   },
   data() {
     return {
+      preview: null,
+      image: null,
       message: "",
     };
   },
   methods: {
     sendMessage() {
-      if (this.message.trim() == "") {
+      if (this.message.trim() == "" && this.image == null) {
         return;
       }
 
+      let formData = new FormData();
+      formData.append("image", this.image);
+      formData.append("message", this.message);
+
       axios
-        .post("chat/room/" + this.room.id + "/message", {
-          message: this.message,
-        })
+        .post("chat/room/" + this.room.id + "/message", formData)
         .then((response) => {
           this.message = "";
+          this.reset();
           this.$emit("messageSent", response.data);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    // preview image
+    previewImage(event) {
+      var input = event.target;
+      if (input.files) {
+        var reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        };
+        this.image = input.files[0];
+        reader.readAsDataURL(input.files[0]);
+      }
+    },
+
+    // reset image
+    reset() {
+      this.image = null;
+      this.preview = null;
     },
   },
 };
