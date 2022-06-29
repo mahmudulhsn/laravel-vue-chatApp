@@ -46,15 +46,11 @@
         </div>
       </div>
     </div>
-
-    <Loader v-if="loading" />
   </div>
 </template>
 
 <script>
-import Loader from "../Helper/Loader.vue";
 export default {
-  components: { Loader },
   props: {
     isModalOpen: {
       type: Boolean,
@@ -63,14 +59,6 @@ export default {
     largeUrl: {
       type: String,
     },
-  },
-  data() {
-    return {
-      loading: false,
-    };
-  },
-  created() {
-    console.log(this.largeUrl);
   },
 
   methods: {
