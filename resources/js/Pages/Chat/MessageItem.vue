@@ -39,7 +39,9 @@
               'float-right': message.user_id == this.$page.props.user.id,
             }"
           >
-            <img :src="message.small_url" alt="" />
+            <span class="cursor-pointer" @click="showLargeImage()">
+              <img :src="message.small_url" alt="" />
+            </span>
             <span v-if="message.message !== ''">{{ message.message }}</span>
           </div>
         </div>
@@ -58,20 +60,38 @@
         </div>
       </div>
       <!-- time -->
+
+      <LargeImage
+        :isModalOpen="isModalOpen"
+        :largeUrl="message.large_url"
+        @modalClose="modalClose"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import LargeImage from "./LargeImage.vue";
 export default {
+  components: { LargeImage },
+  data() {
+    return {
+      isModalOpen: false,
+    };
+  },
   props: {
     message: {
       type: Object,
       default: {},
     },
   },
-  created() {
-    console.log(this.message);
+  methods: {
+    showLargeImage() {
+      this.isModalOpen = true;
+    },
+    modalClose() {
+      this.isModalOpen = false;
+    },
   },
 };
 </script>
